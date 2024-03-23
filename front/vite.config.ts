@@ -1,11 +1,17 @@
 import { defineConfig } from 'vite';
-import dotenv from 'dotenv';
-import replace from '@rollup/plugin-replace';
+import react from '@vitejs/plugin-react';
+import { resolve } from 'path'; 
 
 export default defineConfig({
-  plugins: [
-    replace({
-      'import.meta.env': JSON.stringify(dotenv.config().parsed)
-    })
-  ]
+  plugins: [react()],
+  resolve: {
+    alias: [{ find: '@', replacement: resolve(__dirname, './src') }],
+  },
+  server: {
+    port: 8081,
+    open: '/index.tsx',
+  },
+  define: {
+    'process.env': process.env
+  },
 });
